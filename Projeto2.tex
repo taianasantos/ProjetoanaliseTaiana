@@ -1,0 +1,1274 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage[normalem]{ulem}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Untitled},
+  pdfauthor={Taiana Santos},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Untitled}
+\author{Taiana Santos}
+\date{2023-04-16}
+
+\begin{document}
+\maketitle
+
+\hypertarget{introduuxe7uxe3o}{%
+\subsection{Introdução}\label{introduuxe7uxe3o}}
+
+O desenvolvimento do projeto foi para avaliação da Pós-Graduação MBA em
+Data Science, disciplina Analise Exploratoria de Dados. Utilizamos a
+linguagem de programação R, com as bibliotecas para criação de
+relatorios ``rmarkdown'' e graficos interativos ``shiny''.
+
+\hypertarget{banco-de-dados}{%
+\subsection{Banco de Dados}\label{banco-de-dados}}
+
+Para aplicar os conhecimentos, utilizamos os dados do Ranking de
+Reclamações coletados no Banco Central do Brasil do 4º semestre de 2022.
+Os dados divulgados nas listagens do ranking estão disponíveis para
+download no site \url{https://www.bcb.gov.br/ranking/index.asp} .
+
+O Ranking de Reclamações contribui para a transparência das ações do
+Banco Central do Brasil, trazendo ao conhecimento da sociedade o perfil
+das reclamações que foram processadas, analisadas e encerradas pelo BCB.
+
+O Ranking é formado a partir das reclamações do público registradas nos
+canais de atendimento do Banco Central (BC): internet, correspondência,
+presencialmente ou telefone (145). As demandas são analisadas de forma
+amostral pelo BC.
+
+Participam do Ranking: bancos (comerciais, múltiplos, cooperativos, de
+investimentos), sociedades de crédito, financiamento e investimento
+(SCFI), instituições de pagamento e administradoras de consórcio.
+
+As principais Reclamações registradas são irregularidades em operações e
+serviços de cartões de crédito e em serviços de crédito.
+
+\hypertarget{seleuxe7uxe3o-de-variuxe1veis}{%
+\subsubsection{Seleção de
+variáveis}\label{seleuxe7uxe3o-de-variuxe1veis}}
+
+A função retorna 163 Instituições financeiras em 14 variáveis, sendo 5
+variáveis caracteres e 9 variáveis numéricas, utilizaremos as variáveis
+abaixo:
+
+\begin{itemize}
+\item
+  Instituição financeira: bancos (comerciais, múltiplos, cooperativos,
+  de investimentos), sociedades de crédito, financiamento e investimento
+  (SCFI), instituições de pagamento e administradoras de consórcio.
+\item
+  Reclamações reguladas procedentes: casos em que houve sinal de
+  descumprimento de lei ou norma pela instituição financeira no período
+  indicado.
+\item
+  Total de reclamações: total de reclamações reguladas procedentes,
+  reclamações reguladas outras e reclamações não reguladas.
+\item
+  Total de clientes : O número de clientes é formado pela base conjugada
+  de dados das instituições no Cadastro de Clientes do Sistema
+  Financeiro Nacional (CCS) e no Sistema de Informações de Crédito do
+  Banco Central (SCR), em nº de CPFs e CNPJs distintos. Os clientes são
+  contados uma única vez por instituição ou conglomerado financeiro.
+\item
+  Índice : \uline{(reclamações reguladas procedentes *} 1.000.000) /
+  número de clientes.
+\item
+  Razão de reclamação: Criaremos a variável utilizando o total de
+  (reclamações procedentes / total de reclamações) * 100 .
+
+  As instituições são classificadas pela ordem decrescente do índice de
+  reclamações, ou seja, da mais reclamada para a menos reclamada. É
+  possível consultar a relação de instituições que tiveram menos de
+  trinta reclamações procedentes apresentada em ordem alfabética do
+  nome.
+\end{itemize}
+
+\hypertarget{ambiente-rstudio-e-bibliotecas-utilizadas}{%
+\subsubsection{Ambiente RStudio e Bibliotecas
+utilizadas}\label{ambiente-rstudio-e-bibliotecas-utilizadas}}
+
+\includegraphics{https://raw.githubusercontent.com/taianasantos/Pos/main/print.jpg}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(corrplot)}
+\FunctionTok{library}\NormalTok{(dlookr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(summarytools)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(stringr)}
+\FunctionTok{library}\NormalTok{(writexl)}
+\FunctionTok{library}\NormalTok{(rstatix)}
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{library}\NormalTok{(patchwork)}
+\FunctionTok{library}\NormalTok{(psych)}
+\FunctionTok{library}\NormalTok{(ggcorrplot)}
+\FunctionTok{library}\NormalTok{(GGally)}
+\FunctionTok{library}\NormalTok{(mice)}
+\FunctionTok{library}\NormalTok{(skimr)}
+
+\FunctionTok{library}\NormalTok{(rmarkdown)}
+\CommentTok{\#install.packages("tinytex")}
+\FunctionTok{library}\NormalTok{(tinytex)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{carregando-o-banco-de-dados}{%
+\subsubsection{Carregando o Banco de
+Dados}\label{carregando-o-banco-de-dados}}
+
+--
+
+Utilizamos o github para download do arquivo baixado do Banco Central e
+a função read\_excel() para criar o Banco de dados Bancos3 com os dados
+do arquivo Bancos4.xlsx.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{download.file}\NormalTok{( }\AttributeTok{url =} \StringTok{"https://github.com/taianasantos/analise/blob/main/Bancos.xlsx?raw=true"}\NormalTok{, }\AttributeTok{quiet =} \ConstantTok{TRUE}\NormalTok{,  }\AttributeTok{mode =} \StringTok{"wb"}\NormalTok{, }\AttributeTok{destfile =} \StringTok{"Bancos4.xlsx"}\NormalTok{ )}
+
+\NormalTok{Bancos }\OtherTok{\textless{}{-}}\NormalTok{ readxl }\SpecialCharTok{::} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"Bancos4.xlsx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr }\SpecialCharTok{::} \FunctionTok{kable}\NormalTok{(}\FunctionTok{head}\NormalTok{(Bancos), }\AttributeTok{digits =} \DecValTok{1}\NormalTok{ ,}\StringTok{"pipe"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.5398}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0619}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1062}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1593}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0796}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0531}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Instituicao
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Indice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Procedentes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Total\_Reclamacoes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Clientes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Razao
+\end{minipage} \\
+\midrule()
+\endhead
+ACESSO SOLUÇÕES DE PAGAMENTO S.A. - INSTITUIÇÃO DE PAGAMENTO & 15.5 & 86
+& 179 & 5538591 & 48.0 \\
+AGIBANK (conglomerado) & 112.4 & 224 & 545 & 1992640 & 41.1 \\
+AME DIGITAL BRASIL INSTITUICAO DE PAGAMENTO LTDA & 1.3 & 40 & 92 &
+31101626 & 43.5 \\
+BANCO CSF S.A. & 6.3 & 51 & 165 & 8070375 & 30.9 \\
+BANCO DIGIMAIS S.A. & 170.3 & 56 & 141 & 328722 & 39.7 \\
+BANCO DO ESTADO DO PARÁ S.A. & 33.7 & 34 & 65 & 1009445 & 52.3 \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{identificando-os-tipos-de-cada-variuxe1vel}{%
+\subsubsection{Identificando os tipos de cada
+variável}\label{identificando-os-tipos-de-cada-variuxe1vel}}
+
+--
+
+Utilizamos a função diagnose() ,biblioteca dlookr, para identificar as
+variáveis para análise.
+
+A função diagnose() do pacote dlookr que retorna por variável qual o
+tipo dela, contagem de valores faltantes, frequência de faltantes em
+relação à base toda.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dlookr}\SpecialCharTok{::}\FunctionTok{diagnose}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 6
+##   variables         types     missing_count missing_percent unique_count uniqu~1
+##   <chr>             <chr>             <int>           <dbl>        <int>   <dbl>
+## 1 Instituicao       character             0               0           42   1    
+## 2 Indice            numeric               0               0           42   1    
+## 3 Procedentes       numeric               0               0           39   0.929
+## 4 Total_Reclamacoes numeric               0               0           42   1    
+## 5 Clientes          numeric               0               0           42   1    
+## 6 Razao             numeric               0               0           42   1    
+## # ... with abbreviated variable name 1: unique_rate
+\end{verbatim}
+
+\hypertarget{anuxe1lise-descritiva-da-base-de-dados}{%
+\section{Análise descritiva da Base de
+dados}\label{anuxe1lise-descritiva-da-base-de-dados}}
+
+Para realizar essa análise, podemos utilizar a função descr do pacote
+summarytools e realizar a leitura desses dados. Analisar a centralidade
+dos dados, dipersão, assimetria e se há presença de outliers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Bancos  }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ summarytools}\SpecialCharTok{::}\FunctionTok{descr}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Non-numerical variable(s) ignored: Instituicao
+\end{verbatim}
+
+\begin{verbatim}
+## Descriptive Statistics  
+## Bancos  
+## N: 42  
+## 
+##                         Clientes   Indice   Procedentes    Razao   Total_Reclamacoes
+## ----------------- -------------- -------- ------------- -------- -------------------
+##              Mean    21821567.14    69.91        418.57    38.43             1294.95
+##           Std.Dev    33082609.72   124.29        539.46    13.13             1848.89
+##               Min      179473.00     1.28         30.00     8.62               65.00
+##                Q1     1992640.00    11.75         53.00    28.34              165.00
+##            Median     6800159.50    23.66        185.00    39.26              462.00
+##                Q3    23219194.00    63.88        652.00    48.04             1711.00
+##               Max   148128348.00   638.66       2225.00    70.66             6878.00
+##               MAD     8675307.14    23.80        217.94    15.53              485.55
+##               IQR    20938345.00    50.85        587.75    19.46             1541.00
+##                CV           1.52     1.78          1.29     0.34                1.43
+##          Skewness           2.08     3.04          1.73    -0.01                1.86
+##       SE.Skewness           0.37     0.37          0.37     0.37                0.37
+##          Kurtosis           3.95     9.50          2.22    -0.41                2.35
+##           N.Valid          42.00    42.00         42.00    42.00               42.00
+##         Pct.Valid         100.00   100.00        100.00   100.00              100.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{view}\NormalTok{(}\FunctionTok{descr}\NormalTok{(Bancos))}
+\end{Highlighting}
+\end{Shaded}
+
+As variaveis Clientes, Indice, Procedentes e Total\_Reclamacoes
+apresentam presenças de outliers, influenciando muito o valor da média
+que apresenta valores maiores que a Mediana. Com o valor de desvio
+padrão mais alto indica maior dispersão nos dados, geralmente longe da
+média.
+
+\hypertarget{distribuiuxe7uxe3o-normal}{%
+\section{Distribuição Normal}\label{distribuiuxe7uxe3o-normal}}
+
+A distribuição normal é uma das mais utilizadas em estatística sendo
+exigida em muitas situações pelas suas boas propriedades matemáticas e
+por isso é tão utilizada em probabilidade e estatística, como no teste t
+e na ANOVA.
+
+Para verificar a normalidade da distribuição vamos apresentar três
+ferramentas que devem ser utilizadas em conjunto:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Histograma: É uma distribuição contínua, onde a distribuição de
+  frequências de uma variável quantitativa apresenta a forma de sino e é
+  simétrica em relação a sua média.
+
+  Algumas caracteristicas:
+
+  É simétrica em torno da média;
+
+  A área sob a curva corresponde à proporção 1 ou 100\%;
+
+  As medidas de tendência central (média, mediana e moda) apresentam o
+  mesmo valor;
+
+  Os extremos da curva tendem ao infinito em ambas as direções e,
+  teoricamente, jamais tocam o eixo x;
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{    dds.normal }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{) }\CommentTok{\#Normal}
+\NormalTok{    dds.exp }\OtherTok{\textless{}{-}} \FunctionTok{rexp}\NormalTok{(}\DecValTok{100}\NormalTok{)  }\CommentTok{\# Exponencial }
+    \CommentTok{\# Histogramas}
+
+    \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+
+    \FunctionTok{hist}\NormalTok{(dds.normal, }
+         \AttributeTok{col =} \StringTok{"\#D9D9D9"}\NormalTok{,}
+         \AttributeTok{freq =}\NormalTok{ F, }
+         \AttributeTok{main =} \StringTok{"Histograma Normal"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Distribuição Normal"}\NormalTok{)}
+    \CommentTok{\#curve(dnorm(x, mean = mean(dds.normal), sd = sd(dds.normal)), add = T)}
+
+    \FunctionTok{hist}\NormalTok{(dds.exp,}
+         \AttributeTok{col =} \StringTok{"\#38761D"}\NormalTok{,}
+         \AttributeTok{freq =}\NormalTok{ F, }
+         \AttributeTok{main =} \StringTok{"Histograma não Normal"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Distribuição Exponencial"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  QQ-plot : grafico utilizado para comprar quartil por quartil entre uma
+  distribuição normal padrão e a distribuição que se visa comparar após
+  ser padronizada. Caso o Q-Q Plot tenha comportamento comportamento de
+  uma reta perfeitamente ascendente, é a sinalização de que a
+  distribuição que está estudando se aproxima de uma distribuição
+  normal. No entanto, caso perceba muita variação, sobretudo nos
+  extremos, terá a sinalização de que a distribuição estudada não é
+  normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+
+\CommentTok{\# Se os pontos se concentrarem em torno de uma linha reta, \# então temos indícios de que a distribuição é normal. }
+\FunctionTok{qqnorm}\NormalTok{(dds.normal, }\AttributeTok{main =} \StringTok{"Q{-}Q Plot Normal"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Distribuição Normal"}\NormalTok{) }
+\FunctionTok{qqline}\NormalTok{(dds.normal, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }
+
+\FunctionTok{qqnorm}\NormalTok{(dds.exp, }\AttributeTok{main =} \StringTok{" Q{-}Q Plot Não Normal"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Distribuição Exponencial"}\NormalTok{) }
+\FunctionTok{qqline}\NormalTok{(dds.exp, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+  \includegraphics{Projeto2_files/figure-latex/qq-plot + linha de referência-1.pdf}
+\item
+  Teste Shapiro-Wilk;
+
+  Se p- value \textgreater{} 0,05, então a distribuição dos dados
+  fornecidos não difere significativamente da distribuição normal. Se
+  p-value \textless{} 0.05, então está rejeitada a hipótese de
+  distribuição normal.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstatix}\SpecialCharTok{::} \FunctionTok{shapiro\_test}\NormalTok{(dds.normal) }\CommentTok{\# normal }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable   statistic p.value
+##   <chr>          <dbl>   <dbl>
+## 1 dds.normal     0.996   0.988
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstatix}\SpecialCharTok{::} \FunctionTok{shapiro\_test}\NormalTok{(dds.exp) }\CommentTok{\# não normal}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable statistic    p.value
+##   <chr>        <dbl>      <dbl>
+## 1 dds.exp      0.915 0.00000776
+\end{verbatim}
+
+\hypertarget{normalidade-das-variuxe1veis}{%
+\section{Normalidade das variáveis}\label{normalidade-das-variuxe1veis}}
+
+Utilizando a função pairs.panels e com a analise rapida dos histogramas,
+possivelmente a unica variavel com distribuição normal é a razão.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{psych}\SpecialCharTok{::} \FunctionTok{pairs.panels}\NormalTok{(Bancos[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{], }
+             \AttributeTok{method =} \StringTok{"pearson"}\NormalTok{, }\CommentTok{\# correlation method}
+             \AttributeTok{hist.col =} \StringTok{"lightblue"}\NormalTok{,}
+            \AttributeTok{density =} \ConstantTok{FALSE}\NormalTok{,  }\CommentTok{\# show density plots}
+             \AttributeTok{ellipses =} \ConstantTok{FALSE} \CommentTok{\# show correlation ellipses}
+\NormalTok{             )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\hypertarget{nuxfamero-de-bins}{%
+\subsection{Número de Bins}\label{nuxfamero-de-bins}}
+
+A escolha do número de bins do histograma é uma escolha arbitrária e
+está diretamente ligada à amplitude que se deseja definir como base de
+cada barra contígua, para o caso onde se trabalha com amplitudes iguais
+para todos intervalos.
+
+Existem equações modeladas para sugerir amplitudes dos bins de modo a
+facilitar a decisão do analista, das quais destacamos duas:
+
+A regra de Freedman-Diaconis leva em consideração o intervalo
+interquartil dos dados, que impede que outliers tenham infuência na
+definição da amplitude do intervalo de bin.
+
+A regra de Sturge leva em consideração a dispersão da distribuição para
+definir a amplitude. Em geral, a regra de Sturge é mais recomendada
+quando a distribuição dos dados se aproximará de uma distribuiçao
+normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fd }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  n }\OtherTok{\textless{}{-}}\FunctionTok{length}\NormalTok{(x)}
+  \FunctionTok{return}\NormalTok{((}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{IQR}\NormalTok{(x))}\SpecialCharTok{/}\NormalTok{n}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{))}
+\NormalTok{\}}
+\NormalTok{sr }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  n }\OtherTok{\textless{}{-}}\FunctionTok{length}\NormalTok{(x)}
+  \FunctionTok{return}\NormalTok{((}\FloatTok{3.49}\SpecialCharTok{*}\FunctionTok{sd}\NormalTok{(x))}\SpecialCharTok{/}\NormalTok{n}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{))}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{variavel-indice}{%
+\section{Variavel Indice}\label{variavel-indice}}
+
+\hypertarget{distribuiuxe7uxe3o-nuxe3o-normal}{%
+\subsection{Distribuição Não
+Normal}\label{distribuiuxe7uxe3o-nuxe3o-normal}}
+
+\hypertarget{histograma}{%
+\subsubsection{Histograma}\label{histograma}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Indice) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Indice))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{fd, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Indice\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados Indice aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de FD"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{c}\NormalTok{(}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice), }\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice))) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Mediana"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Media"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+
+
+\NormalTok{g2 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Indice) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Indice))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{sr, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Indice\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados de Indice aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de SR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{c}\NormalTok{(}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice), }\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice))) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Mediana"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Media"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+
+\NormalTok{g1 }\SpecialCharTok{+}\NormalTok{ g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\hypertarget{qq-plot}{%
+\subsubsection{Qq Plot}\label{qq-plot}}
+
+Grafico Qqplot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggqqplot}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice)  }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"QQ plot Variavel Indice"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Indice"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\hypertarget{teste-shapiro-wilk}{%
+\subsubsection{Teste Shapiro-Wilk}\label{teste-shapiro-wilk}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstatix}\SpecialCharTok{::}\FunctionTok{shapiro\_test}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Indice)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable      statistic  p.value
+##   <chr>             <dbl>    <dbl>
+## 1 Bancos$Indice     0.544 3.12e-10
+\end{verbatim}
+
+\hypertarget{variavel-procedentes}{%
+\section{Variavel Procedentes}\label{variavel-procedentes}}
+
+\hypertarget{resultado-distribuiuxe7uxe3o-nuxe3o-normal}{%
+\subsection{Resultado: Distribuição Não
+Normal}\label{resultado-distribuiuxe7uxe3o-nuxe3o-normal}}
+
+\hypertarget{histograma-1}{%
+\subsubsection{Histograma}\label{histograma-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Procedentes) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Procedentes))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{fd, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Procedentes\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados Indice aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de FD"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{c}\NormalTok{(}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes), }\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes))) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Mediana"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Media"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+
+
+\NormalTok{g2 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Procedentes) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Procedentes))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{sr, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Procedentes\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados de Indice aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de SR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{c}\NormalTok{(}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes), }\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes))) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Mediana"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Media"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+
+\NormalTok{g1 }\SpecialCharTok{+}\NormalTok{ g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\hypertarget{qq-plot-1}{%
+\subsubsection{Qq Plot}\label{qq-plot-1}}
+
+Grafico Qqplot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggqqplot}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes)  }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"QQ plot Variavel Procedentes"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Indice"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\hypertarget{teste-shapiro-wilk-1}{%
+\subsubsection{Teste Shapiro-Wilk}\label{teste-shapiro-wilk-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstatix}\SpecialCharTok{::}\FunctionTok{shapiro\_test}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Procedentes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable           statistic     p.value
+##   <chr>                  <dbl>       <dbl>
+## 1 Bancos$Procedentes     0.731 0.000000196
+\end{verbatim}
+
+\hypertarget{variavel-total_reclamacoes}{%
+\section{Variavel Total\_Reclamacoes}\label{variavel-total_reclamacoes}}
+
+\hypertarget{distribuiuxe7uxe3o-nuxe3o-normal-1}{%
+\subsection{Distribuição Não
+Normal}\label{distribuiuxe7uxe3o-nuxe3o-normal-1}}
+
+\hypertarget{histograma-2}{%
+\subsubsection{Histograma}\label{histograma-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Total\_Reclamacoes ) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Total\_Reclamacoes ))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{fd, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Total\_Reclamacoes \textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados Indice aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de FD"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{c}\NormalTok{(}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes ), }\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes ))) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes ) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Mediana"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes ) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Media"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+
+
+\NormalTok{g2 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Total\_Reclamacoes ) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Total\_Reclamacoes ))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{sr, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Total\_Reclamacoes \textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados de Indice aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de SR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{c}\NormalTok{(}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes ), }\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes ))) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes ) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Mediana"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes ) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.02}\NormalTok{, }\AttributeTok{label=}\StringTok{"Media"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+
+\NormalTok{g1 }\SpecialCharTok{+}\NormalTok{ g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\hypertarget{qq-plot-2}{%
+\subsubsection{Qq Plot}\label{qq-plot-2}}
+
+Grafico Qqplot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggqqplot}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes )  }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"QQ plot Variavel Total\_Reclamacoes "}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Indice"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\hypertarget{teste-shapiro-wilk-2}{%
+\subsubsection{Teste Shapiro-Wilk}\label{teste-shapiro-wilk-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstatix}\SpecialCharTok{::}\FunctionTok{shapiro\_test}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Total\_Reclamacoes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable                 statistic      p.value
+##   <chr>                        <dbl>        <dbl>
+## 1 Bancos$Total_Reclamacoes     0.671 0.0000000193
+\end{verbatim}
+
+\hypertarget{variavel-clientes}{%
+\section{Variavel Clientes}\label{variavel-clientes}}
+
+\hypertarget{distribuiuxe7uxe3o-nuxe3o-normal-2}{%
+\subsection{Distribuição Não
+Normal}\label{distribuiuxe7uxe3o-nuxe3o-normal-2}}
+
+\hypertarget{histograma-3}{%
+\subsubsection{Histograma}\label{histograma-3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Clientes) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Clientes))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{fd, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Clientes\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados Clientes aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de FD"}\NormalTok{)}
+\CommentTok{\#+ geom\_vline(xintercept=c(median(Bancos$Clientes), mean(Bancos$Clientes))) + annotate("text", x=median(Bancos$Clientes) + 0.3, y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Clientes) + 0.3, y=0.02, label="Media", angle=90) + geom\_density(linetype = 2) + theme\_classic()}
+
+
+\NormalTok{g2 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Clientes) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Clientes))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{sr, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Clientes\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados de Clientes aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de SR"}\NormalTok{) }
+
+\CommentTok{\#+ geom\_vline(xintercept=c(median(Bancos$Clientes), mean(Bancos$Clientes))) + annotate("text", x=median(Bancos$Clientes) , y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Clientes) , y=0.02, label="Media", angle=90) + geom\_density(linetype = 2) + theme\_classic()}
+
+\NormalTok{g1 }\SpecialCharTok{+}\NormalTok{ g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\hypertarget{qq-plot-3}{%
+\subsubsection{Qq Plot}\label{qq-plot-3}}
+
+Grafico Qqplot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggqqplot}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Clientes)  }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"QQ plot Variavel Clientes"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Indice"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\hypertarget{teste-shapiro-wilk-3}{%
+\subsubsection{Teste Shapiro-Wilk}\label{teste-shapiro-wilk-3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstatix}\SpecialCharTok{::}\FunctionTok{shapiro\_test}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Clientes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable        statistic      p.value
+##   <chr>               <dbl>        <dbl>
+## 1 Bancos$Clientes     0.676 0.0000000234
+\end{verbatim}
+
+\hypertarget{variaveis-razao}{%
+\section{Variaveis Razao}\label{variaveis-razao}}
+
+\hypertarget{distribuiuxe7uxe3o-normal-1}{%
+\subsection{Distribuição Normal}\label{distribuiuxe7uxe3o-normal-1}}
+
+\hypertarget{histogramas}{%
+\subsubsection{Histogramas}\label{histogramas}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Razao) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Razao))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{fd, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Razao\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados Razao aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de FD"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{c}\NormalTok{(}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao), }\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao))) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.05}\NormalTok{, }\AttributeTok{label=}\StringTok{"Mediana"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.05}\NormalTok{, }\AttributeTok{label=}\StringTok{"Media"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+
+
+\NormalTok{g2 }\OtherTok{\textless{}{-}}\NormalTok{ Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Razao) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Razao))}\SpecialCharTok{+}\FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)) , }\AttributeTok{binwidth=}\NormalTok{sr, }\AttributeTok{fill =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Razao\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Densidade de Frequencia\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribuicao dos dados de Razao aproximada por Histograma"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"Binarizacao pela Regra de SR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{c}\NormalTok{(}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao), }\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao))) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{median}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.05}\NormalTok{, }\AttributeTok{label=}\StringTok{"Mediana"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x=}\FunctionTok{mean}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao) }\SpecialCharTok{+} \FloatTok{0.3}\NormalTok{, }\AttributeTok{y=}\FloatTok{0.05}\NormalTok{, }\AttributeTok{label=}\StringTok{"Media"}\NormalTok{, }\AttributeTok{angle=}\DecValTok{90}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{linetype =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+
+\NormalTok{g1 }\SpecialCharTok{+}\NormalTok{ g2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\hypertarget{qqplot}{%
+\subsubsection{QQPLOT}\label{qqplot}}
+
+Grafico Qqplot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ggpubr}\SpecialCharTok{::}\FunctionTok{ggqqplot}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\hypertarget{shapiro-wilk-normality-test}{%
+\subsubsection{Shapiro-Wilk Normality
+Test}\label{shapiro-wilk-normality-test}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rstatix}\SpecialCharTok{::}\FunctionTok{shapiro\_test}\NormalTok{(Bancos}\SpecialCharTok{$}\NormalTok{Razao)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   variable     statistic p.value
+##   <chr>            <dbl>   <dbl>
+## 1 Bancos$Razao     0.991   0.977
+\end{verbatim}
+
+\hypertarget{coeficiente-de-correlauxe7uxe3o}{%
+\section{Coeficiente de
+Correlação}\label{coeficiente-de-correlauxe7uxe3o}}
+
+--
+
+Na estatística o coeficiente de correlação de Pearson (r) mede a relação
+que existe entre duas variáveis dentro de uma mesma escala métrica.
+
+A função do coeficiente de correlação é determinar qual é a intensidade
+da relação que existe entre conjuntos de dados ou informações
+conhecidas.
+
+O valor do coeficiente de correlação pode variar entre -1 e 1. Para
+interpretar o coeficiente é preciso saber que 1 significa que a
+correlação entre as variáveis é perfeita positiva e -1 significa que é
+perfeita negativa. Se o coeficiente for igual a 0 significa que as
+variáveis não dependem uma da outra.
+
+\hypertarget{correlograma}{%
+\subsubsection{Correlograma}\label{correlograma}}
+
+--
+
+Utilizamos a função corrplot() para criar uma visualização grafica da
+matrix de correlação.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{corrplot }\SpecialCharTok{::} \FunctionTok{corrplot}\NormalTok{(}\FunctionTok{cor}\NormalTok{(Bancos[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]), }\AttributeTok{method=}\StringTok{\textquotesingle{}number\textquotesingle{}}\NormalTok{, , }\AttributeTok{tl.col =} \StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{, }\AttributeTok{cl.ratio =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{tl.srt =} \DecValTok{45}\NormalTok{, }\AttributeTok{col =} \FunctionTok{COL2}\NormalTok{(}\StringTok{\textquotesingle{}RdYlBu\textquotesingle{}}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+As maiores coorelação são entre o total de quantidade de clientes,
+reclamações recebidas e reclamações procedentes.
+
+\hypertarget{scatterplot-matrix}{%
+\section{Scatterplot Matrix}\label{scatterplot-matrix}}
+
+A função ggpairs() do pacote GGally nos permite construir uma ótima
+matriz de gráfico de dispersão. Gráficos de dispersão de cada par
+visualizados no lado esquerdo do gráfico e valor de correlação de
+Pearson e significância exibidos no lado direito.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#create }
+\FunctionTok{ggpairs}\NormalTok{(Bancos[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{regressuxe3o-linear}{%
+\section{Regressão linear}\label{regressuxe3o-linear}}
+
+A correlação é uma relação entre duas variáveis, sendo a primeira
+dependente e a segunda independente. A análise da correlação tem o
+objetivo de atestar se existe uma relação de dependência significativa
+entre duas variáveis, é feito através do coeficiente de correlação,
+variando de -- 1 a 1, com -1 correlação linear negativa, 0 nenhuma
+correlação e 1 correlação linear positiva.
+
+Um exemplo em que se pode utilizar o princípio da correlação, um gerente
+de recursos humanos deseja saber se existe ligação entre o número de
+horas de treinamento de um funcionário e o número de reclamações que o
+funcionário recebeu. Caso haja correlação linear positiva, quer dizer
+que quanto mais horas de treinamento se gasta com funcionários, menos
+reclamações. Nesse caso, a variável independente é a quantidade de horas
+de treinamento para o funcionário, e a variável dependente é o número de
+reclamações.
+
+A análise de regressão linear pode ser feita após a garantia de
+correlação linear entre duas variáveis, busca encontrar a reta que
+melhor modela, compensando-se os resíduos, a correlação entre as
+variáveis envolvidas, e essa reta pode ser utilizada para fazer
+previsões de valores da variável dependente a partir de valores da
+variável independente. O mesmo exemplo sobre o treinamento de
+funcionários e número de reclamações valem também para a regressão
+linear, a ``saída'' da regressão linear seria uma função que expressaria
+da melhor maneira a relação entre os valores das variáveis envolvidas.
+
+Para concluir, a análise de correlação junto com a regressão linear têm
+por objetivo maior inferir se há relação entre duas variáveis com base
+em um conjunto de dados anterior, e com base nessa inferência, caso
+positiva para que haja de fato relação, seja possível obter uma função
+que relaciona uma variável a outra para que se possa prever valores
+futuros para a variável dependente com base em valores da variável
+independente. A diferença entre a correlação e regressão linear é que a
+2ª obtém uma função da relação que melhor a expressa, enquanto que a 1ª
+indica se há relação.
+
+Regressão linear é o método com o qual se encontra a reta que melhor
+descreve a relação entre os dados. A reta é criada com uma equação
+linear y = b + m1 * x1\ldots mn*xn, onde b será o coeficiente linear, e
+m o coeficiente angular, sendo um para cada variável preditora existente
+nos dados.
+
+A função que realiza o ajuste da reta ou modelo de regressão linear no R
+é a lm().
+
+O comando summary() poderá indicar se os seus parâmetros estimados são
+significativos ou não, ou seja, se é possível assumir que são diferentes
+de zero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Simples, variavel explicativa idade}
+\NormalTok{modelo}\FloatTok{.1} \OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Procedentes }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Clientes, }\AttributeTok{data =}\NormalTok{ Bancos)}
+\FunctionTok{summary}\NormalTok{(modelo}\FloatTok{.1}\NormalTok{, }\AttributeTok{type =} \StringTok{\textquotesingle{}html\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm(formula = Procedentes \textasciitilde{} Clientes, data =
+Bancos)
+
+Residuals: Min 1Q Median 3Q Max -571.71 -151.63 -77.27 76.13 1202.91
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar)\\
+(Intercept) 1.276e+02 5.832e+01 2.188 0.0346 *\\
+Clientes 1.334e-05 1.484e-06 8.986 3.84e-11 *** --- Signif. codes: 0
+`\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 ' ' 1
+
+Residual standard error: 314.4 on 40 degrees of freedom Multiple
+R-squared: 0.6687, Adjusted R-squared: 0.6604 F-statistic: 80.74 on 1
+and 40 DF, p-value: 3.842e-11
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo}\FloatTok{.1}\SpecialCharTok{$}\NormalTok{coefficients}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  (Intercept)     Clientes 
+## 1.275916e+02 1.333451e-05
+\end{verbatim}
+
+E temos a equação da reta ajustada: E(Y ) = 1.275916e+02 +1.333451e-05 ∗
+Clientes
+
+Essa função também retorna a medida R²(adjusted R-squared), que indica o
+quanto da variação presente nos dados está sendo explicada pela
+covariável.
+
+Quanto maior o R², mais explicativo é o modelo linear, ou seja, melhor
+ele se ajusta à amostra. Com R² = 0.6687 significa que o modelo linear
+explica 66,87\% da variância da variável dependente a partir do
+regressores (variáveis independentes) incluídas naquele modelo linear.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(Bancos, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(Procedentes, Clientes)) }\SpecialCharTok{+}
+   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+   \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{Projeto2_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\hypertarget{section}{%
+\subsection{}\label{section}}
+
+\hypertarget{carregando-o-banco-de-dados-1}{%
+\section{Carregando o Banco de
+Dados}\label{carregando-o-banco-de-dados-1}}
+
+--
+
+Utilizamos o github para download do arquivo baixado do Banco Central e
+a função read\_excel() para criar o Banco de dados Bancos3 com os dados
+do arquivo Bancos4.xlsx.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{download.file}\NormalTok{( }\AttributeTok{url =} \StringTok{"https://github.com/taianasantos/analise/blob/main/Bancosconna.xlsx?raw=true"}\NormalTok{, }\AttributeTok{quiet =} \ConstantTok{TRUE}\NormalTok{,  }\AttributeTok{mode =} \StringTok{"wb"}\NormalTok{, }\AttributeTok{destfile =} \StringTok{"Bancos1.xlsx"}\NormalTok{ )}
+
+\NormalTok{Bancos }\OtherTok{\textless{}{-}}\NormalTok{ readxl }\SpecialCharTok{::} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"Bancos1.xlsx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dados-faltantes}{%
+\section{Dados Faltantes}\label{dados-faltantes}}
+
+Completude (SUBSTANTIVO) - qualidade, estado ou propriedade do que é
+completo, perfeito, acabado.
+
+We should be suspicious of any dataset (large or small) which appears
+perfect. Tradução (``Devemos suspeitar de qualquer conjunto de dados
+(grande ou pequeno) que pareça perfeito.'') --- David J. Hand
+
+A definição de Completude é a qualidade, estado ou propriedade do que é
+completo, perfeito, acabado. No mundo ideal um conjunto de dados seria
+totalmente preenchido, mas na pratica é muito comum que ele não esteja
+totalmente preenchido, terá em algumas colunas ou linhas, valores
+chamados ``NaN'' (do inglês ``Not a Number''), que são os valores
+faltantes.
+
+Algumas possibilidades desses dados faltantes podem ser: perguntas não
+respondidas em uma entrevista, dados perdidos por coleta equivocada de
+registro, muitas vezes, quem estava coletando o conjunto de dados não
+encontrou a informação necessária; ou ainda, no momento de se transferir
+os dados de um lugar para outro, a informação foi perdida; enfim, há
+vários motivos que podem fazer com que um dado falte em uma base de
+dados.
+
+Algumas Informações importantes são perdidas, correlações ficam
+distorcidas ou pode não ter um número satisfatório de pessoas para
+generalizar a situação para uma população maior.
+
+O impacto desses dados faltantes na inferência estatística é
+potencialmente alto, ainda mais em alguns casos onde o público que
+possui dado ausente é sistematicamente diferente daquele que os dados
+estão completos. O simplesmente descartá-los pode levar a resultados
+enviesados.
+
+\hypertarget{tipos-de-dados-faltantes}{%
+\subsection{Tipos de dados faltantes?}\label{tipos-de-dados-faltantes}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Faltantes completamente aleatórios (missingnes completley at random).
+  A probabilidade de estarem ausentes é independente de qualquer
+  observação no banco de dados.
+\item
+  Faltantes aleatórios (missingnes at random). Os dados faltantes não
+  respeitam uma distribuição aleatória como as amostras com dados
+  observados.
+\item
+  Faltantes não aleatórios (missing not at random). A probabilidade é
+  que os valores faltantes dependam não só dos dados observados assim
+  como dos dados não observados.
+\end{enumerate}
+
+É importante identificar o tipo correto de dados faltantes para não
+introduzir um viés aos dados e utilizar a melhor técninca para tratar os
+dados ausentes.
+
+Algumas técnicas de tratamenos dos ``NaN'':
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Deletar a variável/atributo que possui dados faltantes.
+\item
+  Deletar somente as amostras com dados faltantes.
+\item
+  Preencher (fill in) os dados faltantes por alguma estatística (média,
+  mediana, etc)
+\item
+  Modelar o dado faltante
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Bancos }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dlookr}\SpecialCharTok{::}\FunctionTok{diagnose}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 6
+##   variables         types     missing_count missing_percent unique_count uniqu~1
+##   <chr>             <chr>             <int>           <dbl>        <int>   <dbl>
+## 1 Instituicao       character             0             0            154   1    
+## 2 Indice            numeric             112            72.7           43   0.279
+## 3 Procedentes       numeric               0             0             65   0.422
+## 4 Total_Reclamacoes numeric               0             0             86   0.558
+## 5 Clientes          numeric               0             0            144   0.935
+## 6 Razao             numeric               0             0            102   0.662
+## # ... with abbreviated variable name 1: unique_rate
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(Bancos)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 112
+\end{verbatim}
+
+\hypertarget{imputando-dados-com-mice}{%
+\subsection{Imputando dados com mice}\label{imputando-dados-com-mice}}
+
+Métodos multivariados para tratamento de missing values A função mice()
+é utilizada para construir o modelo, que produz várias imputações
+(valores de substituição) para os dados ausentes, sendo o método baseado
+na especificação condicional, em que cada variável incompleta é imputada
+por um modelo separado.
+
+Dados faltantes na Variavel Indice, quando a quantidade de reclamações
+procedentes é menor que 30, fantantes não aleatórios.
+
+A função mice possui vários métodos, como por exemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Realiza a imputacao mice}
+\NormalTok{dadosmice }\OtherTok{\textless{}{-}} \FunctionTok{mice}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ Bancos[ ,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}
+  \AttributeTok{meth =} \StringTok{"rf"}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{complete}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  iter imp variable
+##   1   1  Indice
+##   1   2  Indice
+##   1   3  Indice
+##   1   4  Indice
+##   1   5  Indice
+##   2   1  Indice
+##   2   2  Indice
+##   2   3  Indice
+##   2   4  Indice
+##   2   5  Indice
+##   3   1  Indice
+##   3   2  Indice
+##   3   3  Indice
+##   3   4  Indice
+##   3   5  Indice
+##   4   1  Indice
+##   4   2  Indice
+##   4   3  Indice
+##   4   4  Indice
+##   4   5  Indice
+##   5   1  Indice
+##   5   2  Indice
+##   5   3  Indice
+##   5   4  Indice
+##   5   5  Indice
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#skim(dadosmice)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Realiza a imputacao mice}
+\NormalTok{dadosmice2 }\OtherTok{\textless{}{-}} \FunctionTok{mice}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ Bancos[ ,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}
+  \AttributeTok{meth =} \StringTok{"cart"}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{complete}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  iter imp variable
+##   1   1  Indice
+##   1   2  Indice
+##   1   3  Indice
+##   1   4  Indice
+##   1   5  Indice
+##   2   1  Indice
+##   2   2  Indice
+##   2   3  Indice
+##   2   4  Indice
+##   2   5  Indice
+##   3   1  Indice
+##   3   2  Indice
+##   3   3  Indice
+##   3   4  Indice
+##   3   5  Indice
+##   4   1  Indice
+##   4   2  Indice
+##   4   3  Indice
+##   4   4  Indice
+##   4   5  Indice
+##   5   1  Indice
+##   5   2  Indice
+##   5   3  Indice
+##   5   4  Indice
+##   5   5  Indice
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#skim(dadosmice2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dashboard-shiny}{%
+\section{Dashboard Shiny}\label{dashboard-shiny}}
+
+\hypertarget{section-1}{%
+\section{}\label{section-1}}
+
+\includegraphics{https://raw.githubusercontent.com/taianasantos/analise/main/shyne1.jpg}
+
+\includegraphics{https://raw.githubusercontent.com/taianasantos/analise/main/shyne2.png}
+
+\hypertarget{conclusuxf5es}{%
+\section{Conclusões}\label{conclusuxf5es}}
+
+--
+
+O Ranking de reclamações é muito importante para dar transparencia e
+confiança dos serviços prestados pelas Instituições Financeiras.
+Percebemos que Instituições recebem muitas reclamações improcedentes,
+cerca de 64\%, esse numero elevado pode ser fruto de insatisfação com o
+produto contratado, falta de conhecimento ou pouca transparência das
+normas bancárias.
+
+Algumas sugestões propostas para uma redução das reclamações recebidas :
+
+Melhoria dos canais de ouvidoria para reduzir a quantidade de
+reclamações recebidas pelo Banco Central.
+
+Transparência nas informações prestadas aos clientes.
+
+Investimento em Treinamento e ampliação das equipes de atendimento.
+
+Aperfeiçoamento dos canais de atendimento.
+
+Linguagem simples para melhoria da compreensão dos clientes.
+
+\hypertarget{bibliografia}{%
+\section{Bibliografia}\label{bibliografia}}
+
+\url{https://didatica.tech/regressao-linear-com-linguagem-r/}
+
+\url{https://didatica.tech/o-que-sao-dados-missing/}
+
+\url{https://www.ufrgs.br/wiki-r/index.php?title=Tratamento_de_Missing_Values\#Tratamento_de_missing_values_com_Knn_no_R}
+
+\url{https://www.statology.org/scatterplot-matrix-in-r/}
+
+\url{https://stefvanbuuren.name/fimd/sec-modelform.html}
+
+\end{document}

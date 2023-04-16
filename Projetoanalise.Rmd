@@ -1,0 +1,754 @@
+---
+title: "Ranking de Reclamações do Banco Central"
+author: "Taiana Santos"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::robobook:
+    highlight: kate
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE, eval= FALSE}
+## Global options
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+## Introdução
+
+O desenvolvimento do projeto foi para avaliação da Pós-Graduação MBA em
+Data Science, disciplina Analise Exploratoria de Dados. Utilizamos a
+linguagem de programação R, com as bibliotecas para criação de
+relatorios "rmarkdown" e graficos interativos "shiny".
+
+## Banco de Dados
+
+Para aplicar os conhecimentos, utilizamos os dados do Ranking de
+Reclamações coletados no Banco Central do Brasil do 4º semestre de 2022.
+Os dados divulgados nas listagens do ranking estão disponíveis para
+download no site <https://www.bcb.gov.br/ranking/index.asp> .
+
+O Ranking de Reclamações contribui para a transparência das ações do
+Banco Central do Brasil, trazendo ao conhecimento da sociedade o perfil
+das reclamações que foram processadas, analisadas e encerradas pelo BCB.
+
+O Ranking é formado a partir das reclamações do público registradas nos
+canais de atendimento do Banco Central (BC): internet, correspondência,
+presencialmente ou telefone (145). As demandas são analisadas de forma
+amostral pelo BC.
+
+Participam do Ranking: bancos (comerciais, múltiplos, cooperativos, de
+investimentos), sociedades de crédito, financiamento e investimento
+(SCFI), instituições de pagamento e administradoras de consórcio.
+
+As principais Reclamações registradas são irregularidades em operações e
+serviços de cartões de crédito e em serviços de crédito.
+
+### Seleção de variáveis
+
+A função retorna 163 Instituições financeiras em 14 variáveis, sendo 5
+variáveis caracteres e 9 variáveis numéricas, utilizaremos as variáveis
+abaixo:
+
+-   Instituição financeira: bancos (comerciais, múltiplos, cooperativos,
+    de investimentos), sociedades de crédito, financiamento e
+    investimento (SCFI), instituições de pagamento e administradoras de
+    consórcio.
+
+-   Reclamações reguladas procedentes: casos em que houve sinal de
+    descumprimento de lei ou norma pela instituição financeira no
+    período indicado.
+
+-   Total de reclamações: total de reclamações reguladas procedentes,
+    reclamações reguladas outras e reclamações não reguladas.
+
+-   Total de clientes : O número de clientes é formado pela base
+    conjugada de dados das instituições no Cadastro de Clientes do
+    Sistema Financeiro Nacional (CCS) e no Sistema de Informações de
+    Crédito do Banco Central (SCR), em nº de CPFs e CNPJs distintos. Os
+    clientes são contados uma única vez por instituição ou conglomerado
+    financeiro.
+
+-   Índice : [(reclamações reguladas procedentes \*]{.underline}
+    1.000.000) / número de clientes.
+
+-   Razão de reclamação: Criaremos a variável utilizando o total de
+    (reclamações procedentes / total de reclamações) \* 100 .
+
+    As instituições são classificadas pela ordem decrescente do índice
+    de reclamações, ou seja, da mais reclamada para a menos reclamada. É
+    possível consultar a relação de instituições que tiveram menos de
+    trinta reclamações procedentes apresentada em ordem alfabética do
+    nome.
+
+### Ambiente RStudio e Bibliotecas utilizadas
+
+![](https://raw.githubusercontent.com/taianasantos/Pos/main/print.jpg)
+
+```{r, warning = FALSE, message = FALSE}
+library(corrplot)
+library(dlookr)
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(summarytools)
+library(tidyverse)
+library(knitr)
+library(stringr)
+library(writexl)
+library(rstatix)
+library(ggpubr)
+library(patchwork)
+library(psych)
+library(ggcorrplot)
+library(GGally)
+library(mice)
+library(skimr)
+
+
+```
+
+### Carregando o Banco de Dados
+
+--
+
+Utilizamos o github para download do arquivo baixado do Banco Central e
+a função read_excel() para criar o Banco de dados Bancos3 com os dados
+do arquivo Bancos4.xlsx.
+
+```{r}
+
+download.file( url = "https://github.com/taianasantos/analise/blob/main/Bancos.xlsx?raw=true", quiet = TRUE,  mode = "wb", destfile = "Bancos4.xlsx" )
+
+Bancos <- readxl :: read_excel("Bancos4.xlsx")
+
+```
+
+--
+
+```{r}
+knitr :: kable(head(Bancos), digits = 1 ,"pipe")
+```
+
+### Identificando os tipos de cada variável
+
+--
+
+Utilizamos a função diagnose() ,biblioteca dlookr, para identificar as
+variáveis para análise.
+
+A função diagnose() do pacote dlookr que retorna por variável qual o
+tipo dela, contagem de valores faltantes, frequência de faltantes em
+relação à base toda.
+
+```{r}
+Bancos %>% dlookr::diagnose()
+```
+
+# Análise descritiva da Base de dados
+
+Para realizar essa análise, podemos utilizar a função descr do pacote
+summarytools e realizar a leitura desses dados. Analisar a centralidade
+dos dados, dipersão, assimetria e se há presença de outliers.
+
+```{r}
+Bancos  %>% summarytools::descr()
+view(descr(Bancos))
+```
+
+As variaveis Clientes, Indice, Procedentes e Total_Reclamacoes
+apresentam presenças de outliers, influenciando muito o valor da média
+que apresenta valores maiores que a Mediana. Com o valor de desvio
+padrão mais alto indica maior dispersão nos dados, geralmente longe da
+média.
+
+# Distribuição Normal
+
+A distribuição normal é uma das mais utilizadas em estatística sendo
+exigida em muitas situações pelas suas boas propriedades matemáticas e
+por isso é tão utilizada em probabilidade e estatística, como no teste t
+e na ANOVA.
+
+Para verificar a normalidade da distribuição vamos apresentar três
+ferramentas que devem ser utilizadas em conjunto:
+
+1.  Histograma: É uma distribuição contínua, onde a distribuição de
+    frequências de uma variável quantitativa apresenta a forma de sino e
+    é simétrica em relação a sua média.
+
+    Algumas caracteristicas:
+
+    É simétrica em torno da média;
+
+    A área sob a curva corresponde à proporção 1 ou 100%;
+
+    As medidas de tendência central (média, mediana e moda) apresentam o
+    mesmo valor;
+
+    Os extremos da curva tendem ao infinito em ambas as direções e,
+    teoricamente, jamais tocam o eixo x;
+
+```{r}
+  set.seed(1)
+    dds.normal <- rnorm(100,2,1) #Normal
+    dds.exp <- rexp(100)  # Exponencial 
+    # Histogramas
+
+    par(mfrow=c(1,2))
+
+    hist(dds.normal, 
+         col = "#D9D9D9",
+         freq = F, 
+         main = "Histograma Normal", xlab = "Distribuição Normal")
+    #curve(dnorm(x, mean = mean(dds.normal), sd = sd(dds.normal)), add = T)
+
+    hist(dds.exp,
+         col = "#38761D",
+         freq = F, 
+         main = "Histograma não Normal", xlab = "Distribuição Exponencial")
+```
+
+2.  QQ-plot : grafico utilizado para comprar quartil por quartil entre
+    uma distribuição normal padrão e a distribuição que se visa comparar
+    após ser padronizada. Caso o Q-Q Plot tenha comportamento
+    comportamento de uma reta perfeitamente ascendente, é a sinalização
+    de que a distribuição que está estudando se aproxima de uma
+    distribuição normal. No entanto, caso perceba muita variação,
+    sobretudo nos extremos, terá a sinalização de que a distribuição
+    estudada não é normal.
+
+    ```{r qq-plot + linha de referência }
+    par(mfrow=c(1,2))
+
+    # Se os pontos se concentrarem em torno de uma linha reta, # então temos indícios de que a distribuição é normal. 
+    qqnorm(dds.normal, main = "Q-Q Plot Normal", xlab = "Distribuição Normal") 
+    qqline(dds.normal, col = "red") 
+
+    qqnorm(dds.exp, main = " Q-Q Plot Não Normal", xlab = "Distribuição Exponencial") 
+    qqline(dds.exp, col = "red") 
+    ```
+
+3.  Teste Shapiro-Wilk;
+
+    Se p- value \> 0,05, então a distribuição dos dados fornecidos não
+    difere significativamente da distribuição normal. Se p-value \<
+    0.05, então está rejeitada a hipótese de distribuição normal.
+
+```{r Teste Shapiro-Wilk}
+
+rstatix:: shapiro_test(dds.normal) # normal 
+rstatix:: shapiro_test(dds.exp) # não normal
+```
+
+# Normalidade das variáveis
+
+Utilizando a função pairs.panels e com a analise rapida dos histogramas,
+possivelmente a unica variavel com distribuição normal é a razão.
+
+```{r}
+psych:: pairs.panels(Bancos[, -1], 
+             method = "pearson", # correlation method
+             hist.col = "lightblue",
+            density = FALSE,  # show density plots
+             ellipses = FALSE # show correlation ellipses
+             )
+```
+
+## Número de Bins
+
+A escolha do número de bins do histograma é uma escolha arbitrária e
+está diretamente ligada à amplitude que se deseja definir como base de
+cada barra contígua, para o caso onde se trabalha com amplitudes iguais
+para todos intervalos.
+
+Existem equações modeladas para sugerir amplitudes dos bins de modo a
+facilitar a decisão do analista, das quais destacamos duas:
+
+A regra de Freedman-Diaconis leva em consideração o intervalo
+interquartil dos dados, que impede que outliers tenham infuência na
+definição da amplitude do intervalo de bin.
+
+A regra de Sturge leva em consideração a dispersão da distribuição para
+definir a amplitude. Em geral, a regra de Sturge é mais recomendada
+quando a distribuição dos dados se aproximará de uma distribuiçao
+normal.
+
+```{r}
+
+fd <- function(x) {
+  n <-length(x)
+  return((2*IQR(x))/n^(1/3))
+}
+sr <- function(x) {
+  n <-length(x)
+  return((3.49*sd(x))/n^(1/3))
+  }
+
+```
+
+# Variavel Indice
+
+## Distribuição Não Normal {.tabset}
+
+### Histograma
+
+```{r}
+
+g1 <- Bancos %>% dplyr::select(Indice) %>% ggplot(aes(x=Indice))+geom_histogram(aes(y = after_stat(density)) , binwidth=fd, fill = 'lightblue') + xlab('Indice') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados Indice aproximada por Histograma", subtitle = "Binarizacao pela Regra de FD") + geom_vline(xintercept=c(median(Bancos$Indice), mean(Bancos$Indice))) + annotate("text", x=median(Bancos$Indice) + 0.3, y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Indice) + 0.3, y=0.02, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+
+g2 <- Bancos %>% dplyr::select(Indice) %>% ggplot(aes(x=Indice))+geom_histogram(aes(y = after_stat(density)) , binwidth=sr, fill = 'lightblue') + xlab('Indice') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados de Indice aproximada por Histograma", subtitle = "Binarizacao pela Regra de SR") + geom_vline(xintercept=c(median(Bancos$Indice), mean(Bancos$Indice))) + annotate("text", x=median(Bancos$Indice) + 0.3, y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Indice) + 0.3, y=0.02, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+g1 + g2
+```
+
+### Qq Plot
+
+Grafico Qqplot
+
+```{r}
+ggpubr::ggqqplot(Bancos$Indice)  +
+ labs(title="QQ plot Variavel Indice",
+       y = "Indice")
+```
+
+### Teste Shapiro-Wilk
+
+```{r}
+rstatix::shapiro_test(Bancos$Indice)
+
+```
+
+# Variavel Procedentes
+
+## Resultado: Distribuição Não Normal {.tabset}
+
+### Histograma
+
+```{r}
+
+g1 <- Bancos %>% dplyr::select(Procedentes) %>% ggplot(aes(x=Procedentes))+geom_histogram(aes(y = after_stat(density)) , binwidth=fd, fill = 'lightblue') + xlab('Procedentes') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados Indice aproximada por Histograma", subtitle = "Binarizacao pela Regra de FD") + geom_vline(xintercept=c(median(Bancos$Procedentes), mean(Bancos$Procedentes))) + annotate("text", x=median(Bancos$Procedentes) + 0.3, y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Procedentes) + 0.3, y=0.02, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+
+g2 <- Bancos %>% dplyr::select(Procedentes) %>% ggplot(aes(x=Procedentes))+geom_histogram(aes(y = after_stat(density)) , binwidth=sr, fill = 'lightblue') + xlab('Procedentes') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados de Indice aproximada por Histograma", subtitle = "Binarizacao pela Regra de SR") + geom_vline(xintercept=c(median(Bancos$Procedentes), mean(Bancos$Procedentes))) + annotate("text", x=median(Bancos$Procedentes) + 0.3, y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Procedentes) + 0.3, y=0.02, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+g1 + g2
+```
+
+### Qq Plot
+
+Grafico Qqplot
+
+```{r}
+ggpubr::ggqqplot(Bancos$Procedentes)  +
+ labs(title="QQ plot Variavel Procedentes",
+       y = "Indice")
+```
+
+### Teste Shapiro-Wilk
+
+```{r}
+rstatix::shapiro_test(Bancos$Procedentes)
+
+```
+
+# Variavel Total_Reclamacoes
+
+## Distribuição Não Normal {.tabset}
+
+### Histograma
+
+```{r}
+
+g1 <- Bancos %>% dplyr::select(Total_Reclamacoes ) %>% ggplot(aes(x=Total_Reclamacoes ))+geom_histogram(aes(y = after_stat(density)) , binwidth=fd, fill = 'lightblue') + xlab('Total_Reclamacoes ') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados Indice aproximada por Histograma", subtitle = "Binarizacao pela Regra de FD") + geom_vline(xintercept=c(median(Bancos$Total_Reclamacoes ), mean(Bancos$Total_Reclamacoes ))) + annotate("text", x=median(Bancos$Total_Reclamacoes ) + 0.3, y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Total_Reclamacoes ) + 0.3, y=0.02, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+
+g2 <- Bancos %>% dplyr::select(Total_Reclamacoes ) %>% ggplot(aes(x=Total_Reclamacoes ))+geom_histogram(aes(y = after_stat(density)) , binwidth=sr, fill = 'lightblue') + xlab('Total_Reclamacoes ') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados de Indice aproximada por Histograma", subtitle = "Binarizacao pela Regra de SR") + geom_vline(xintercept=c(median(Bancos$Total_Reclamacoes ), mean(Bancos$Total_Reclamacoes ))) + annotate("text", x=median(Bancos$Total_Reclamacoes ) + 0.3, y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Total_Reclamacoes ) + 0.3, y=0.02, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+g1 + g2
+```
+
+### Qq Plot
+
+Grafico Qqplot
+
+```{r}
+ggpubr::ggqqplot(Bancos$Total_Reclamacoes )  +
+ labs(title="QQ plot Variavel Total_Reclamacoes ",
+       y = "Indice")
+```
+
+### Teste Shapiro-Wilk
+
+```{r}
+rstatix::shapiro_test(Bancos$Total_Reclamacoes)
+
+```
+
+# Variavel Clientes
+
+## Distribuição Não Normal {.tabset}
+
+### Histograma
+
+```{r}
+
+g1 <- Bancos %>% dplyr::select(Clientes) %>% ggplot(aes(x=Clientes))+geom_histogram(aes(y = after_stat(density)) , binwidth=fd, fill = 'lightblue') + xlab('Clientes') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados Clientes aproximada por Histograma", subtitle = "Binarizacao pela Regra de FD")
+#+ geom_vline(xintercept=c(median(Bancos$Clientes), mean(Bancos$Clientes))) + annotate("text", x=median(Bancos$Clientes) + 0.3, y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Clientes) + 0.3, y=0.02, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+
+g2 <- Bancos %>% dplyr::select(Clientes) %>% ggplot(aes(x=Clientes))+geom_histogram(aes(y = after_stat(density)) , binwidth=sr, fill = 'lightblue') + xlab('Clientes') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados de Clientes aproximada por Histograma", subtitle = "Binarizacao pela Regra de SR") 
+
+#+ geom_vline(xintercept=c(median(Bancos$Clientes), mean(Bancos$Clientes))) + annotate("text", x=median(Bancos$Clientes) , y=0.02, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Clientes) , y=0.02, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+g1 + g2
+```
+
+### Qq Plot
+
+Grafico Qqplot
+
+```{r}
+ggpubr::ggqqplot(Bancos$Clientes)  +
+ labs(title="QQ plot Variavel Clientes",
+       y = "Indice")
+```
+
+### Teste Shapiro-Wilk
+
+```{r}
+rstatix::shapiro_test(Bancos$Clientes)
+
+```
+
+# Variaveis Razao
+
+## Distribuição Normal {.tabset}
+
+### Histogramas
+
+```{r}
+
+g1 <- Bancos %>% dplyr::select(Razao) %>% ggplot(aes(x=Razao))+geom_histogram(aes(y = after_stat(density)) , binwidth=fd, fill = 'lightblue') + xlab('Razao') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados Razao aproximada por Histograma", subtitle = "Binarizacao pela Regra de FD") + geom_vline(xintercept=c(median(Bancos$Razao), mean(Bancos$Razao))) + annotate("text", x=median(Bancos$Razao) + 0.3, y=0.05, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Razao) + 0.3, y=0.05, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+
+g2 <- Bancos %>% dplyr::select(Razao) %>% ggplot(aes(x=Razao))+geom_histogram(aes(y = after_stat(density)) , binwidth=sr, fill = 'lightblue') + xlab('Razao') + ylab('Densidade de Frequencia') + labs(title = "Distribuicao dos dados de Razao aproximada por Histograma", subtitle = "Binarizacao pela Regra de SR") + geom_vline(xintercept=c(median(Bancos$Razao), mean(Bancos$Razao))) + annotate("text", x=median(Bancos$Razao) + 0.3, y=0.05, label="Mediana", angle=90) + annotate("text", x=mean(Bancos$Razao) + 0.3, y=0.05, label="Media", angle=90) + geom_density(linetype = 2) + theme_classic()
+
+g1 + g2
+```
+
+### QQPLOT
+
+Grafico Qqplot
+
+```{r}
+ggpubr::ggqqplot(Bancos$Razao)
+
+```
+
+### Shapiro-Wilk Normality Test
+
+```{r}
+rstatix::shapiro_test(Bancos$Razao)
+
+```
+
+# Coeficiente de Correlação
+
+--
+
+Na estatística o coeficiente de correlação de Pearson (r) mede a relação
+que existe entre duas variáveis dentro de uma mesma escala métrica.
+
+A função do coeficiente de correlação é determinar qual é a intensidade
+da relação que existe entre conjuntos de dados ou informações
+conhecidas.
+
+O valor do coeficiente de correlação pode variar entre -1 e 1. Para
+interpretar o coeficiente é preciso saber que 1 significa que a
+correlação entre as variáveis é perfeita positiva e -1 significa que é
+perfeita negativa. Se o coeficiente for igual a 0 significa que as
+variáveis não dependem uma da outra.
+
+### Correlograma
+
+--
+
+Utilizamos a função corrplot() para criar uma visualização grafica da
+matrix de correlação.
+
+```{r}
+
+corrplot :: corrplot(cor(Bancos[, -1]), method='number', , tl.col = 'black', cl.ratio = 0.2, tl.srt = 45, col = COL2('RdYlBu', 15))
+
+
+```
+
+As maiores coorelação são entre o total de quantidade de clientes,
+reclamações recebidas e reclamações procedentes.
+
+# Scatterplot Matrix
+
+A função ggpairs() do pacote GGally nos permite construir uma ótima
+matriz de gráfico de dispersão. Gráficos de dispersão de cada par
+visualizados no lado esquerdo do gráfico e valor de correlação de
+Pearson e significância exibidos no lado direito.
+
+```{r, eval= FALSE}
+
+#create 
+ggpairs(Bancos[, -1])
+
+```
+
+# Regressão linear
+
+A correlação é uma relação entre duas variáveis, sendo a primeira
+dependente e a segunda independente. A análise da correlação tem o
+objetivo de atestar se existe uma relação de dependência significativa
+entre duas variáveis, é feito através do coeficiente de correlação,
+variando de -- 1 a 1, com -1 correlação linear negativa, 0 nenhuma
+correlação e 1 correlação linear positiva.
+
+Um exemplo em que se pode utilizar o princípio da correlação, um gerente
+de recursos humanos deseja saber se existe ligação entre o número de
+horas de treinamento de um funcionário e o número de reclamações que o
+funcionário recebeu. Caso haja correlação linear positiva, quer dizer
+que quanto mais horas de treinamento se gasta com funcionários, menos
+reclamações. Nesse caso, a variável independente é a quantidade de horas
+de treinamento para o funcionário, e a variável dependente é o número de
+reclamações.
+
+A análise de regressão linear pode ser feita após a garantia de
+correlação linear entre duas variáveis, busca encontrar a reta que
+melhor modela, compensando-se os resíduos, a correlação entre as
+variáveis envolvidas, e essa reta pode ser utilizada para fazer
+previsões de valores da variável dependente a partir de valores da
+variável independente. O mesmo exemplo sobre o treinamento de
+funcionários e número de reclamações valem também para a regressão
+linear, a "saída" da regressão linear seria uma função que expressaria
+da melhor maneira a relação entre os valores das variáveis envolvidas.
+
+Para concluir, a análise de correlação junto com a regressão linear têm
+por objetivo maior inferir se há relação entre duas variáveis com base
+em um conjunto de dados anterior, e com base nessa inferência, caso
+positiva para que haja de fato relação, seja possível obter uma função
+que relaciona uma variável a outra para que se possa prever valores
+futuros para a variável dependente com base em valores da variável
+independente. A diferença entre a correlação e regressão linear é que a
+2ª obtém uma função da relação que melhor a expressa, enquanto que a 1ª
+indica se há relação.
+
+Regressão linear é o método com o qual se encontra a reta que melhor
+descreve a relação entre os dados. A reta é criada com uma equação
+linear y = b + m1 \* x1...mn\*xn, onde b será o coeficiente linear, e m
+o coeficiente angular, sendo um para cada variável preditora existente
+nos dados.
+
+A função que realiza o ajuste da reta ou modelo de regressão linear no R
+é a lm().
+
+O comando summary() poderá indicar se os seus parâmetros estimados são
+significativos ou não, ou seja, se é possível assumir que são diferentes
+de zero.
+
+```{r regressao linear com uma variavel , echo = TRUE, warning=FALSE, results='asis'}
+
+#Simples, variavel explicativa idade
+modelo.1 <- lm(Procedentes ~ Clientes, data = Bancos)
+summary(modelo.1, type = 'html')
+```
+
+```{r}
+modelo.1$coefficients
+```
+
+E temos a equação da reta ajustada: E(Y ) = 1.275916e+02 +1.333451e-05 ∗
+Clientes
+
+Essa função também retorna a medida R²(adjusted R-squared), que indica o
+quanto da variação presente nos dados está sendo explicada pela
+covariável.
+
+Quanto maior o R², mais explicativo é o modelo linear, ou seja, melhor
+ele se ajusta à amostra. Com R² = 0.6687 significa que o modelo linear
+explica 66,87% da variância da variável dependente a partir do
+regressores (variáveis independentes) incluídas naquele modelo linear.
+
+```{r}
+ggplot(Bancos, mapping = aes(Procedentes, Clientes)) +
+   geom_point() +
+   geom_smooth(method = "lm")
+```
+
+## 
+
+# Carregando o Banco de Dados
+
+--
+
+Utilizamos o github para download do arquivo baixado do Banco Central e
+a função read_excel() para criar o Banco de dados Bancos3 com os dados
+do arquivo Bancos4.xlsx.
+
+```{r}
+
+download.file( url = "https://github.com/taianasantos/analise/blob/main/Bancosconna.xlsx?raw=true", quiet = TRUE,  mode = "wb", destfile = "Bancos1.xlsx" )
+
+Bancos <- readxl :: read_excel("Bancos1.xlsx")
+
+```
+
+# Dados Faltantes
+
+Completude (SUBSTANTIVO) - qualidade, estado ou propriedade do que é
+completo, perfeito, acabado.
+
+We should be suspicious of any dataset (large or small) which appears
+perfect. Tradução ("Devemos suspeitar de qualquer conjunto de dados
+(grande ou pequeno) que pareça perfeito.") --- David J. Hand
+
+A definição de Completude é a qualidade, estado ou propriedade do que é
+completo, perfeito, acabado. No mundo ideal um conjunto de dados seria
+totalmente preenchido, mas na pratica é muito comum que ele não esteja
+totalmente preenchido, terá em algumas colunas ou linhas, valores
+chamados "NaN" (do inglês "Not a Number"), que são os valores faltantes.
+
+Algumas possibilidades desses dados faltantes podem ser: perguntas não
+respondidas em uma entrevista, dados perdidos por coleta equivocada de
+registro, muitas vezes, quem estava coletando o conjunto de dados não
+encontrou a informação necessária; ou ainda, no momento de se transferir
+os dados de um lugar para outro, a informação foi perdida; enfim, há
+vários motivos que podem fazer com que um dado falte em uma base de
+dados.
+
+Algumas Informações importantes são perdidas, correlações ficam
+distorcidas ou pode não ter um número satisfatório de pessoas para
+generalizar a situação para uma população maior.
+
+O impacto desses dados faltantes na inferência estatística é
+potencialmente alto, ainda mais em alguns casos onde o público que
+possui dado ausente é sistematicamente diferente daquele que os dados
+estão completos. O simplesmente descartá-los pode levar a resultados
+enviesados.
+
+## Tipos de dados faltantes?
+
+1.  Faltantes completamente aleatórios (missingnes completley at
+    random). A probabilidade de estarem ausentes é independente de
+    qualquer observação no banco de dados.
+2.  Faltantes aleatórios (missingnes at random). Os dados faltantes não
+    respeitam uma distribuição aleatória como as amostras com dados
+    observados.
+3.  Faltantes não aleatórios (missing not at random). A probabilidade é
+    que os valores faltantes dependam não só dos dados observados assim
+    como dos dados não observados.
+
+É importante identificar o tipo correto de dados faltantes para não
+introduzir um viés aos dados e utilizar a melhor técninca para tratar os
+dados ausentes.
+
+Algumas técnicas de tratamenos dos "NaN":
+
+1.  Deletar a variável/atributo que possui dados faltantes.
+
+2.  Deletar somente as amostras com dados faltantes.
+
+3.  Preencher (fill in) os dados faltantes por alguma estatística
+    (média, mediana, etc)
+
+4.  Modelar o dado faltante
+
+```{r}
+Bancos %>% dlookr::diagnose()
+
+```
+
+```{r}
+sum(is.na(Bancos)) 
+
+```
+
+## Imputando dados com mice
+
+Métodos multivariados para tratamento de missing values A função mice()
+é utilizada para construir o modelo, que produz várias imputações
+(valores de substituição) para os dados ausentes, sendo o método baseado
+na especificação condicional, em que cada variável incompleta é imputada
+por um modelo separado.
+
+Dados faltantes na Variavel Indice, quando a quantidade de reclamações
+procedentes é menor que 30, fantantes não aleatórios.
+
+A função mice possui vários métodos, como por exemplo:
+
+```{r Random forest imputation	}
+# Realiza a imputacao mice
+dadosmice <- mice(
+  data = Bancos[ ,-1],
+  meth = "rf"
+) %>% 
+  complete() 
+
+skim(dadosmice)
+```
+
+```{r Classification and regression trees	}
+# Realiza a imputacao mice
+dadosmice2 <- mice(
+  data = Bancos[ ,-1],
+  meth = "cart"
+) %>% 
+  complete() 
+
+skim(dadosmice2)
+```
+
+# Dashboard Shiny 
+
+# 
+
+![](https://raw.githubusercontent.com/taianasantos/analise/main/shyne1.jpg)
+
+![](https://raw.githubusercontent.com/taianasantos/analise/main/shyne2.png)
+
+
+
+
+# Conclusões
+
+--
+
+O Ranking de reclamações é muito importante para dar transparencia e
+confiança dos serviços prestados pelas Instituições Financeiras.
+Percebemos que Instituições recebem muitas reclamações improcedentes,
+cerca de 64%, esse numero elevado pode ser fruto de insatisfação com o
+produto contratado, falta de conhecimento ou pouca transparência das
+normas bancárias.
+
+Algumas sugestões propostas para uma redução das reclamações recebidas :
+
+Melhoria dos canais de ouvidoria para reduzir a quantidade de
+reclamações recebidas pelo Banco Central.
+
+Transparência nas informações prestadas aos clientes.
+
+Investimento em Treinamento e ampliação das equipes de atendimento.
+
+Aperfeiçoamento dos canais de atendimento.
+
+Linguagem simples para melhoria da compreensão dos clientes.
+
+# Bibliografia
+
+<https://didatica.tech/regressao-linear-com-linguagem-r/>
+
+<https://didatica.tech/o-que-sao-dados-missing/>
+
+
+<https://www.ufrgs.br/wiki-r/index.php?title=Tratamento_de_Missing_Values#Tratamento_de_missing_values_com_Knn_no_R>
+
+<https://www.statology.org/scatterplot-matrix-in-r/>
+
+<https://stefvanbuuren.name/fimd/sec-modelform.html>

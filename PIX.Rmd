@@ -1,0 +1,254 @@
+---
+title: "Teste t PIX "
+author: "Taiana Santos"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::robobook:
+    highlight: kate
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+```
+
+## PIX
+
+O que é Pix? Pix é o pagamento instantâneo brasileiro. O meio de
+pagamento criado pelo Banco Central (BC) em que os recursos são
+transferidos entre contas em poucos segundos, a qualquer hora ou dia. É
+prático, rápido e seguro. O Pix pode ser realizado a partir de uma conta
+corrente, conta poupança ou conta de pagamento pré-paga.
+
+Além de aumentar a velocidade em que pagamentos ou transferências são
+feitos e recebidos, o Pix tem o potencial de:
+
+alavancar a competitividade e a eficiência do mercado; baixar o custo,
+aumentar a segurança e aprimorar a experiência dos clientes; incentivar
+a eletronização do mercado de pagamentos de varejo; promover a inclusão
+financeira; e preencher uma série de lacunas existentes na cesta de
+instrumentos de pagamentos disponíveis atualmente à população.
+
+O Pix foi lançado no dia 5 de outubro de 2020, para o cadastramento de
+chaves. De 5 a 15 de novembro passou por uma fase de testes para
+detectar possíveis falhas, iniciando oficialmente, de forma integral, em
+16 de novembro. 
+
+No 4º Trimestre de 2020, forem incluidas novas irregularidades: 
+• "Pix -- Chaves" 
+• "Pix -- Diversos" 
+• "Pix -- Experiências do Usuário" 
+• "Pix -- Iniciação" 
+• "Pix -- Liquidação" 
+• "Pix -- Outros" 
+• "Pix -- Tarifa"
+
+
+Antes do Pix
+B - 02/2020 
+C - 03/2020 
+
+Depois do Pix
+
+D - 04/2020 
+E - 01/2021 
+
+
+```{r include=FALSE}
+library(corrplot)
+library(dlookr)
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(summarytools)
+library(tidyverse)
+library(knitr)
+library(stringr)
+library(writexl)
+```
+
+```{r include=FALSE}
+
+#install.packages("rio")
+library(rio)
+
+
+B = rio::import("https://www3.bcb.gov.br/rdrweb/rest/ext/ranking/arquivo?ano=2020&periodicidade=TRIMESTRAL&periodo=2&tipo=Bancos+e+financeiras", encoding = "Latin-1", format = "csv")
+
+
+C = rio::import("https://www3.bcb.gov.br/rdrweb/rest/ext/ranking/arquivo?ano=2020&periodicidade=TRIMESTRAL&periodo=3&tipo=Bancos+e+financeiras", encoding = "Latin-1", format = "csv")
+
+D = rio::import("https://www3.bcb.gov.br/rdrweb/rest/ext/ranking/arquivo?ano=2020&periodicidade=TRIMESTRAL&periodo=4&tipo=Bancos+e+financeiras", encoding = "Latin-1", format = "csv")
+
+E = rio::import("https://www3.bcb.gov.br/rdrweb/rest/ext/ranking/arquivo?ano=2021&periodicidade=TRIMESTRAL&periodo=1&tipo=Bancos+e+financeiras", encoding = "Latin-1", format = "csv")
+
+
+Pre.Pix <- rbind(B,C)
+Pos.Pix <- rbind(D,E)
+
+
+Pre.Pix$V15 <- NULL
+Pos.Pix$V15 <- NULL
+
+
+limpeza.nomes.pipe <- function(nomes)
+{
+  nomes.limpos <- nomes %>% stringr::str_replace_all("/", "") %>% 
+    stringr::str_replace_all("\\s", "_") %>% stringr::str_replace_all("__", "_")
+  return(nomes.limpos)  
+}
+
+names(Pre.Pix) <- limpeza.nomes.pipe(names(Pre.Pix))
+names(Pos.Pix) <- limpeza.nomes.pipe(names( Pos.Pix))
+
+
+
+Limpeza.acentos <- function(x) iconv(x, to = "ASCII//TRANSLIT")
+names(Pre.Pix) <- Limpeza.acentos(names(Pre.Pix))
+names(Pos.Pix) <- Limpeza.acentos(names(Pos.Pix))
+
+Pre.Pix <-  dplyr::select(Pre.Pix, 1, 2, 6,7,8,11,12)
+Pos.Pix <-  dplyr::select(Pos.Pix, 1, 2, 6,7,8,11,12)
+
+
+Pos.Pix <- dplyr::rename(Pos.Pix,c(
+ Procedentes =  Quantidade_de_reclamacoes_reguladas_procedentes,
+  Total_Reclamacoes= Quantidade_total_de_reclamacoes,   
+ Clientes =`Quantidade_total_de_clientes_-_CCS_e_SCR`,
+ Instituicao = Instituicao_financeira ))
+
+Pre.Pix <- dplyr::rename(Pre.Pix,c(
+ Procedentes =  Quantidade_de_reclamacoes_reguladas_procedentes,
+  Total_Reclamacoes= Quantidade_total_de_reclamacoes,   
+ Clientes =`Quantidade_total_de_clientes_-_CCS_e_SCR`,
+ Instituicao = Instituicao_financeira ))
+
+Pre.Pix <- Pre.Pix[!(is.na(Pre.Pix$Clientes)), ]
+
+
+```
+
+
+# Teste t de Student no R
+
+
+Pra que serve o teste t de Student?
+O teste t de Studente (ou simplesmente teste t) compara duas médias e mostra se as diferenças entre essas médias são significativas. Em outras palavras, permite que você avalie se essas diferenças ocorreram por um mero por acaso ou não.
+
+A necessidade de determinar se duas médias de amostras são diferentes entre si é uma situação extremamente frequente em pesquisas científicas.
+
+Por exemplo se um grupo experimental difere de um grupo controle, se uma amostra difere da população, se um grupo difere antes de depois de um procedimento. Nessas diversas situações, um método bastante comum é a comparação das médias da medida de interesse.
+
+Por exemplo, a média de peso de dois grupos submetidos a diferentes dietas.
+
+Entretanto, a simples percepção da diferença não é suficiente. Afinal de contas, é possível que a diferença encontrada seja devida ao mero acaso e não à dieta ou à intervenção em estudo. Assim, é necessário algo mais do que simplesmente verificar que houve uma diferença, é preciso analisar se essa diferença é estatisticamente significativa. Em outras palavras, é preciso uma estimativa do quão provável essa diferença poderia ser devida ao acaso. O test t serve justamente para isso, para estimar se a diferença das médias de dois conjuntos de dados é ou não estatisticamente significativa.
+
+
+
+Como interpretar o resultado do teste t
+Como todo teste estatístico, a teste t também tem como produto a medida do valor de p. Ou seja, no final das contas, teremos calculado a probabilidade da diferença encontrada (entre as médias) terem sido por acaso. Se esse valor for menor que 5% ( p < 0.05), a tradição científica é de rejeitarmos a hipótese de que as diferenças sejam por acaso (rejeitamos a hipótese nula) e alegamos termos encontrado uma diferença estatísticamente significativa.
+
+Os vários tipos de teste t
+Existem 3 tipos comuns de teste t:
+
+teste t para duas amostras independentes (ou não pareadas)
+teste t para duas amostras dependentes (ou pareadas)
+teste t para uma amostra
+
+Esses testes servem para:
+
+Comparar as médias de duas amostras independentes (teste-t de para duas amostras independentes)
+Comparar as médias de duas amostras pareadas - mesmos sujeitos em diferentes momentos de tempo (teste-t pareado)
+Comparar a média de uma amostra com a média de uma população (teste de de uma amostra)
+Realizando o test t padrão do R: teste t para amostras independentes
+
+Utilizamos a função t.test() para usar essa função basta incluir como argumentos os valores obtidos de cada grupo da pesquisa e o próprio essa função do R já calcula a média de cada grupo e faz a comparação estatística.
+
+
+# Hipotese Apos o Pix a media de Reclamações Recebidas aumentou
+
+Abaixo estão as notas da prova teórica de estatística de 2018 de homens e mulheres.
+
+
+```{r}
+mean(Pre.Pix$Total_Reclamacoes)
+mean(Pos.Pix$Total_Reclamacoes)
+
+```
+
+A média das reclamações Pos Pix foi maior . A questão estatística é: foi um mero acaso?
+
+```{r}
+t.test(Pre.Pix$Total_Reclamacoes, Pos.Pix$Total_Reclamacoes)
+
+```
+
+** Analisando o resultado acima**
+
+É preciso verificar o valor de p no teste acima:
+
+p = 0.985
+
+– Um pequeno valor de p (p ≤ 0,05, ou seja, probabilidade menor ou igual a 5%): indica que há uma pequena probabilidade de que a diferença observada entre os grupos seja ao acaso, então, você considera que há diferença significativa entre os grupos.
+
+– Um grande valor de p (p > 0,05, ou seja, probabilidade maior que 5%): indica que há uma grande probabilidade de que a diferença observada entre os grupos seja ao acaso, então, você considera que não há diferença significativa entre os grupos.
+
+
+Conclusão final
+
+Não há diferença significativa apos o uso do Pix.
+ 
+
+# Hipotese Apos o Pix a media de clientes aumentou
+
+```{r}
+mean(Pre.Pix$Clientes)
+mean(Pos.Pix$Clientes)
+
+```
+
+
+```{r}
+t.test(Pre.Pix$Clientes, Pos.Pix$Clientes)
+
+```
+p-value = 0.6533
+
+– Um pequeno valor de p (p ≤ 0,05, ou seja, probabilidade menor ou igual a 5%): indica que há uma pequena probabilidade de que a diferença observada entre os grupos seja ao acaso, então, você considera que há diferença significativa entre os grupos.
+
+– Um grande valor de p (p > 0,05, ou seja, probabilidade maior que 5%): indica que há uma grande probabilidade de que a diferença observada entre os grupos seja ao acaso, então, você considera que não há diferença significativa entre os grupos.
+
+
+Conclusão final
+
+Não há diferença significativa apos o uso do Pix.
+ 
+
+# Hipotese Apos o Pix media de Reclamações Procedentes aumentou
+
+
+```{r}
+mean(Pre.Pix$Procedentes)
+mean(Pos.Pix$Procedentes)
+
+```
+
+
+```{r}
+t.test(Pre.Pix$Procedentes, Pos.Pix$Procedentes)
+
+```
+p-value = 0.2103
+
+– Um pequeno valor de p (p ≤ 0,05, ou seja, probabilidade menor ou igual a 5%): indica que há uma pequena probabilidade de que a diferença observada entre os grupos seja ao acaso, então, você considera que há diferença significativa entre os grupos.
+
+– Um grande valor de p (p > 0,05, ou seja, probabilidade maior que 5%): indica que há uma grande probabilidade de que a diferença observada entre os grupos seja ao acaso, então, você considera que não há diferença significativa entre os grupos.
+
+Conclusão final
+
+Houve um aumento na media de reclamações procedentes apos o Pix, mas não é significativa. 
